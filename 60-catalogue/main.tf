@@ -200,9 +200,10 @@ resource "terraform_data" "catalogue" {
   ]
 
   # Step 2: Set permissions and execute
+  depends_on = [aws_autoscaling_policy.catalogue]
   provisioner "local-exec" {
     command = "aws ec2 terminate-instances --instance-ids ${aws_instance.catalogue.id}"
-    depends_on = [aws_lb_listener_rule.catalogue]
+    
   }
 }
 

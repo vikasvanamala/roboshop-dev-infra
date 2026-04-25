@@ -6,7 +6,7 @@ resource "aws_instance" "bastion" {
     associate_public_ip_address = true
     
     # Reads a script named "bastion.sh" in the same directory
-  user_data = file("$bastion.sh")
+  user_data = file("bastion.sh")
 
     tags = merge (
         local.common_tags,
