@@ -38,7 +38,7 @@ resource "terraform_data" "mongodb" {
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/bootstrap.sh",
-      "sudo /tmp/bootstrap.sh mongodb"
+      "sudo /tmp/bootstrap.sh mongodb ${var.environment}"
     ]
   }
 }
@@ -83,7 +83,7 @@ resource "terraform_data" "redis" {
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/bootstrap.sh",
-      "sudo /tmp/bootstrap.sh redis"
+      "sudo /tmp/bootstrap.sh redis ${var.environment}"
     ]
   }
 }
@@ -127,7 +127,7 @@ resource "terraform_data" "rabbitmq" {
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/bootstrap.sh",
-      "sudo /tmp/bootstrap.sh rabbitmq"
+      "sudo /tmp/bootstrap.sh rabbitmq ${var.environment}"
     ]
   }
 }
@@ -138,7 +138,7 @@ resource "aws_instance" "mysql" {
     instance_type          = var.instance_type
     vpc_security_group_ids = [local.mysql_sg_id]  
     subnet_id = local.database_subnet_id 
-    iam_instance_profile   = "aws_iam_instance_profile.mysql.name"
+    iam_instance_profile   = aws_iam_instance_profile.mysql.name
 
     tags = merge (
         local.common_tags,
@@ -178,7 +178,7 @@ resource "terraform_data" "mysql" {
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/bootstrap.sh",
-      "sudo /tmp/bootstrap.sh mysql"
+      "sudo /tmp/bootstrap.sh mysql ${var.environment}"
     ]
   }
 }
@@ -187,7 +187,7 @@ resource "terraform_data" "mysql" {
 
 resource "aws_route53_record" "mongodb" {
   zone_id = var.zone_id
-  name    = "mongodb-${var.environment}-${var.domain_name}" #mongodb-dev-vicky08.fun
+  name    = "mongodb-${var.environment}.${var.domain_name}" #mongodb-dev-vicky08.fun
   type    = "A"
   ttl     = 1
   records = [aws_instance.mongodb.private_ip]
@@ -196,7 +196,7 @@ resource "aws_route53_record" "mongodb" {
 
 resource "aws_route53_record" "redis" {
   zone_id = var.zone_id
-  name    = "redis-${var.environment}-${var.domain_name}" #redis-dev-vicky08.fun
+  name    = "redis-${var.environment}.${var.domain_name}" #redis-dev-vicky08.fun
   type    = "A"
   ttl     =  1
   records  = [aws_instance.redis.private_ip]
@@ -205,7 +205,7 @@ resource "aws_route53_record" "redis" {
 
 resource "aws_route53_record" "rabbitmq" {
   zone_id = var.zone_id
-  name    = "rabbitmq-${var.environment}-${var.domain_name}" #rabbitmq-dev-vicky08.fun
+  name    = "rabbitmq-${var.environment}.${var.domain_name}" #rabbitmq-dev-vicky08.fun
   type    = "A"
   ttl     =  1
   records  = [aws_instance.rabbitmq.private_ip]
@@ -214,7 +214,7 @@ resource "aws_route53_record" "rabbitmq" {
 
 resource "aws_route53_record" "mysql" {
   zone_id = var.zone_id
-  name    = "mysql-${var.environment}-${var.domain_name}" #mysql-dev-vicky08.fun
+  name    = "mysql-${var.environment}.${var.domain_name}" #mysql-dev-vicky08.fun
   type    = "A"
   ttl     =  1
   records  = [aws_instance.mysql.private_ip]
