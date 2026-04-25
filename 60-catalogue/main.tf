@@ -194,3 +194,17 @@ resource "aws_lb_listener_rule" "catalogue" {
   }
 }
 
+resource "terraform_data" "catalogue" {
+  triggers_replace = [
+    aws_instance.catalogue.id
+  ]
+
+  # Step 2: Set permissions and execute
+  provisioner "local-exec" {
+    command = "aws ec2 terminate-instances --instance-ids ${aws_instance.catalogue.id}"
+    depends_on = [aws_lb_listener_rule.catalogue]
+  }
+}
+
+
+
