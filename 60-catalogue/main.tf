@@ -131,6 +131,11 @@ resource "aws_autoscaling_group" "catalogue" {
   health_check_type         = "ELB"
   force_delete              = false
 
+  depends_on = [
+  aws_lb_target_group.catalogue,
+  aws_lb_listener_rule.catalogue
+  ]
+
   launch_template {
     id      = aws_launch_template.catalogue.id
     version = aws_launch_template.catalogue.latest_version
