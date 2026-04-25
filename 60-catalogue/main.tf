@@ -50,7 +50,7 @@ resource "aws_ec2_instance_state" "catalogue" {
 
 resource "aws_ami_from_instance" "catalogue" {
   name               = "${local.common_name_suffix}-catalogue-ami"
-  source_instance_id = aws_ec2_instance.catalogue.id
+  source_instance_id = aws_instance.catalogue.id
   depends_on = [aws_ec2_instance_state.catalogue]
 
   tags = merge (
@@ -83,13 +83,13 @@ resource "aws_lb_target_group" "catalogue" {
 
 resource "aws_launch_template" "catalogue" {
   name   = "${local.common_name_suffix}-catalogue"
-  image_id      = "aws_ami_from_instance.catalogue.id" # Replace with valid AMI ID
+  image_id      = aws_ami_from_instance.catalogue.id  # Replace with valid AMI ID
 
   instance_initiated_shutdown_behavior = "terminate"
   instance_type = "t3.micro"
 
   # Network and Security
-  vpc_security_group_ids = ["local.catalogue_sg_id"]
+  vpc_security_group_ids = [local.catalogue_sg_id]
 
   update_default_version = true
   
@@ -179,7 +179,7 @@ resource "aws_autoscaling_policy" "catalogue" {
 }
 
 resource "aws_lb_listener_rule" "catalogue" {
-  listener_arn = local.backend_alb.listener_arn
+  listener_arn = local.backend_alb_listener_arn
   priority     = 100
 
   action {
@@ -189,7 +189,7 @@ resource "aws_lb_listener_rule" "catalogue" {
 
   condition {
     host_header {
-      values = ["catalogue.backend_alb-${var.environment}-${var.domain_name}"] #catalogue-backend_alb-dev-daws86s.fun
+      values = ["catalogue.backend-alb-${var.environment}-${var.domain_name}"] #catalogue-backend_alb-dev-daws86s.fun
     }
   }
 }
