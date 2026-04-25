@@ -1,0 +1,17 @@
+locals {
+  common_tags = {
+        Project = var.project_name
+        Environment = var.environment
+        Terraform = true
+  }
+  common_name_suffix = "${var.project_name}-${var.environment}" # roboshop-dev
+  ami_id = data.aws_ami.joindevops.id
+  vpc_id = data.aws_ssm_parameter.vpc_id
+  
+  private_subnet_id = split("," , data.aws_ssm_parameter.privte_subnet_ids.value)[0]
+  private_subnet_ids = data.aws_ssm_parameter.privte_subnet_ids.value
+
+  catalogue_sg_id = data.aws_ssm_parameter.catalogue_sg_id.value
+  backend_lb_listener_arn = data.aws_ssm_parameter.backend_alb_listener_arn
+  
+}
