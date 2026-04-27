@@ -6,7 +6,7 @@ variable "rule_priority" {
     default = 10
 }
 
-/* variable "components" {
+variable "components" {
     default = {
         catalogue = {
             rule_priority = 10
@@ -27,4 +27,4 @@ variable "rule_priority" {
             rule_priority = 60
         }
     }
-} */
+} 
