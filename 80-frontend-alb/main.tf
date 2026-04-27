@@ -10,18 +10,18 @@ resource "aws_lb" "frontend_alb" {
   tags = merge (
     local.common_tags ,
         {
-            name = "${local.common_name_suffix}-frontend-alb"
+            Name = "${local.common_name_suffix}-frontend-alb"
         }
 
   )
 }
 
-resource "aws_lb_listener" "roboshop" {
-  load_balancer_arn = aws_lb.frontend.arn
+resource "aws_lb_listener" "frontend_alb" {
+  load_balancer_arn = aws_lb.frontend_alb.arn
   port              = "443"
   protocol          = "HTTPS"
-  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-Res-PQ-2025-09" # Recommended default policy
-  certificate_arn   = "local.frontend_alb_certificate_arn"
+  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06" # Recommended default policy
+  certificate_arn   = local.frontend_alb_certificate_arn
 
    default_action {
     type = "fixed-response"
