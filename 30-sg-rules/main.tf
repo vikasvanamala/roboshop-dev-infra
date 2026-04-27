@@ -74,14 +74,7 @@ resource "aws_security_group_rule" "backend_alb_bastion" {
   to_port           = 80
 }
 
-resource "aws_security_group_rule" "mongodb_catalogue" {
-  type                     = "ingress"
-  security_group_id        = local.mongodb_sg_id
-  source_security_group_id = local.catalogue_sg_id
-  from_port                = 27017
-  to_port                  = 27017
-  protocol                 = "tcp"
-}
+
 
 ##### Frontend ALB SG RUles #####
 resource "aws_security_group_rule" "frontend_alb_public" {
@@ -91,4 +84,40 @@ resource "aws_security_group_rule" "frontend_alb_public" {
   from_port         = 443
   protocol          = "tcp"
   to_port           = 443
+}
+
+resource "aws_security_group_rule" "mongodb_catalogue" {
+  type                     = "ingress"
+  security_group_id        = local.mongodb_sg_id
+  source_security_group_id = local.catalogue_sg_id
+  from_port                = 27017
+  to_port                  = 27017
+  protocol                 = "tcp"
+}
+
+resource "aws_security_group_rule" "mongodb_user" {
+  type                     = "ingress"
+  security_group_id        = local.mongodb_sg_id
+  source_security_group_id = local.user_sg_id
+  from_port                = 27017
+  to_port                  = 27017
+  protocol                 = "tcp"
+}
+
+resource "aws_security_group_rule" "redis_user" {
+  type                     = "ingress"
+  security_group_id        = local.redis_sg_id
+  source_security_group_id = local.user_sg_id
+  from_port                = 6379
+  to_port                  = 6379
+  protocol                 = "tcp"
+}
+
+resource "aws_security_group_rule" "redis_cart" {
+  type                     = "ingress"
+  security_group_id        = local.redis_sg_id
+  source_security_group_id = local.cart_sg_id
+  from_port                = 6379
+  to_port                  = 6379
+  protocol                 = "tcp"
 }
