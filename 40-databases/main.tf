@@ -18,7 +18,7 @@ resource "terraform_data" "mongodb" {
     aws_instance.mongodb.id
   ]
 
-  depends_on = [aws_instance.mongodb]
+
 
   connection {
     type        = "ssh"
@@ -63,8 +63,6 @@ resource "terraform_data" "redis" {
     aws_instance.redis.id
   ]
 
-  depends_on = [aws_instance.redis]
-
   connection {
     type        = "ssh"
     user        = "ec2-user"
@@ -107,8 +105,6 @@ resource "terraform_data" "rabbitmq" {
   triggers_replace = [
     aws_instance.rabbitmq.id
   ]
-
-  depends_on = [aws_instance.rabbitmq]
 
   connection {
     type        = "ssh"
@@ -159,7 +155,6 @@ resource "terraform_data" "mysql" {
     aws_instance.mysql.id
   ]
 
-  depends_on = [aws_instance.mysql]
 
   connection {
     type        = "ssh"

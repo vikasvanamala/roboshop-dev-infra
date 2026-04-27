@@ -14,9 +14,11 @@ variable "sg_names" {
         # databases
         "mongodb" , "redis" , "rabbitmq" , "mysql" ,
         # backend servers
-        "catalogue" , 
+        "catalogue" , "cart" , "user" , "shipping" , "payment" ,
+        # frontend servers
+        "frontend" ,
         # loadbalancer
-        "backend_alb" , "frontend_alb"
+        "backend_alb" , "frontend_alb" 
 
     ]  
 }
