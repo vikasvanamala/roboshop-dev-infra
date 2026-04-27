@@ -36,6 +36,7 @@ resource "aws_route53_record" "backend_alb" {
   zone_id = var.zone_id                 # The ID of your hosted zone
   name    = "*.backend-alb-${var.environment}.${var.domain_name}"  # The domain name for the record
   type    = "A"                            # Alias records typically use type A or AAAA
+  allow_overwrite = true
 
   alias {
     name                   = aws_lb.backend_alb.dns_name    # Target DNS name (e.g., from an ALB)

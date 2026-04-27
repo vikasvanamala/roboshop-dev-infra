@@ -80,3 +80,11 @@ resource "aws_security_group_rule" "mongodb_catalogue" {
   to_port                  = 27017
   protocol                 = "tcp"
 }
+
+resource "aws_security_group_rule" "frontend_alb" {
+  type              = "ingress"
+  security_group_id = local.frontend_alb_sg_id
+  from_port         = 443
+  protocol          = "tcp"
+  to_port           = 443
+}

@@ -91,8 +91,8 @@ resource "aws_launch_template" "catalogue" {
   # Network and Security
   vpc_security_group_ids = [local.catalogue_sg_id]
 
+  # when we run terraform apply again, a new version will be created with new AMI ID
   update_default_version = true
-  
 
   # Tags applied to the instance at launch
   tag_specifications {

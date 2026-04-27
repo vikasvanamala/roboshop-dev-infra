@@ -14,4 +14,5 @@ locals {
 
   catalogue_sg_id = data.aws_ssm_parameter.catalogue_sg_id.value
   backend_alb_sg_id = data.aws_ssm_parameter.backend_alb_sg_id.value
+  frontend_alb_sg_id = data.aws_ssm_parameter.front_alb_sg_id.value
 }

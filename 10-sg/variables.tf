@@ -16,7 +16,8 @@ variable "sg_names" {
         # backend servers
         "catalogue" , 
         # loadbalancer
-        "backend_alb"
+        "backend_alb" , "frontend_alb"
+
     ]  
 }
 
