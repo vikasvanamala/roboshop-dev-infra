@@ -15,7 +15,7 @@ cd /home/ec2-user
 if [ ! -d "roboshop-dev-infra" ]; then
   git clone https://github.com/vikasvanamala/roboshop-dev-infra.git
 fi
-# chown ec2-user:ec2-user -R roboshop-dev-infra
+chown ec2-user:ec2-user -R roboshop-dev-infra
 cd roboshop-dev-infra/40-databases
 terraform init -upgrade
 terraform apply -auto-approve
