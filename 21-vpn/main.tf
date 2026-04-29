@@ -17,7 +17,7 @@ resource "aws_instance" "openvpn" {
 
 resource "aws_route53_record" "openvpn" {
   zone_id = var.zone_id
-  name    = "openvpn.${var.domain_name}" #mongodb-dev-vicky08.fun
+  name    = "openvpn.${var.domain_name}" #openvpn.vicky08.fun
   type    = "A"
   ttl     = 1
   records = [aws_instance.openvpn.public_ip]
