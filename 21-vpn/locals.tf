@@ -6,6 +6,6 @@ locals {
   }
   common_name_suffix = "${var.project_name}-${var.environment}" # roboshop-dev
   ami_id = data.aws_ami.openvpn.id
-  openvpn_sg_id = data.aws_ssm_parameter.openvpn_sg_id
+  openvpn_sg_id = data.aws_ssm_parameter.openvpn_sg_id.value
   public_subnet_id = split("," , data.aws_ssm_parameter.public_subnet_ids.value)[0]
 }

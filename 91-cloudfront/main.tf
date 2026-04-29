@@ -1,5 +1,7 @@
 
 resource "aws_cloudfront_distribution" "roboshop" {
+
+  
   
   origin {
     # roboshop-dev.daws86s.fun
@@ -23,7 +25,7 @@ resource "aws_cloudfront_distribution" "roboshop" {
   viewer_protocol_policy = "https-only"
 
   allowed_methods = ["GET", "HEAD", "OPTIONS", "PUT" , "DELETE", "PATCH", "POST"]
-  cached_methods  = ["GET", "HEAD", "OPTIONS", "PUT" , "DELETE", "PATCH", "POST"]
+  cached_methods  = ["GET", "HEAD"]
   cache_policy_id          = local.cachingDisabled
 
   }
@@ -63,8 +65,10 @@ resource "aws_cloudfront_distribution" "roboshop" {
   }
 
   tags = merge (
-        local.common_tags, {
-        Name = "${local.common_name_suffix}-cdn"
+
+    local.common_tags,
+    {
+      Name = "${local.common_name_suffix}-cdn"
     }
   )
 
@@ -81,8 +85,8 @@ resource "aws_route53_record" "cdn" {
   allow_overwrite = true
 
   alias {
-    name                   = aws_cloudfront_didtribution.roboshop.domain_name    
-    zone_id                = aws_cloudfront_didtribution.roboshop.hosted_zone_id    
+    name                   = aws_cloudfront_distribution.roboshop.domain_name    
+    zone_id                = aws_cloudfront_distribution.roboshop.hosted_zone_id    
     evaluate_target_health = true                  
   }
 }
